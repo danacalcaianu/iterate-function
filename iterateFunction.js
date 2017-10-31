@@ -6,7 +6,7 @@ const object = {
             phone: "074074074",
             address: {
                 homeAddress: {
-                    current :{
+                    current : {
                         street : "some street",
                     }
                 },
@@ -16,24 +16,18 @@ const object = {
     },
 }
 
-function displayProps(obj, key) {
+function displayProps( obj, key = '' ) {
   let result = [];
-  if(Array.isArray(obj)){
+  if ( Array.isArray( obj ) ) {
       return result;
   }
   for ( var property in obj ) {
-      if ( typeof obj[property] == "object" && !(Array.isArray(obj[property])) ) {
-          if ( key !== undefined ) {
-              result.push( ...displayProps( obj[property], key + '.' + property ) );
-          } else {
-              result.push( ...displayProps( obj[property], property ) );
-          }
-      } else if ( typeof obj[property] !== "function") {
-          if ( key !== undefined ) {
-              result.push( key + '.' + property );
-          } else {
-              result.push( property );
-          }
+      if ( typeof obj[ property ] == "object" && !( Array.isArray( obj[ property ] ) ) ) {
+          let stack;
+          key == undefined ? stack = property : stack = key + '.' + property;
+          result.push( ...displayProps( obj[ property ], stack ));
+      } else if ( typeof obj[ property ] !== "function" ) {
+        key == undefined ? result.push( property ) : result.push( key + '.' + property );
       }
 
   }
