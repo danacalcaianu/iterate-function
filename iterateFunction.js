@@ -22,12 +22,12 @@ function displayProps( obj, key = '' ) {
       return result;
   }
   for ( var property in obj ) {
+    let stack;
+    key == '' ? stack = property : stack = key + '.' + property;
       if ( typeof obj[ property ] == "object" && !( Array.isArray( obj[ property ] ) ) ) {
-          let stack;
-          key == undefined ? stack = property : stack = key + '.' + property;
           result.push( ...displayProps( obj[ property ], stack ));
       } else if ( typeof obj[ property ] !== "function" ) {
-        key == undefined ? result.push( property ) : result.push( key + '.' + property );
+        result.push(stack);
       }
 
   }
